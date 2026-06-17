@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You, Mubashira 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --pk:#FF6B9D;--gd:#FFB347;
+  --tl:#FFE4F0;--ts:rgba(255,228,240,.75);
+  --cb:rgba(0,0,0,.38);--bd:rgba(255,107,157,.28);
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Lato',sans-serif;color:var(--tl);}
+
+#bg{position:fixed;inset:0;z-index:0;}
+#pc{position:fixed;inset:0;z-index:1;pointer-events:none;}
+#app{position:fixed;inset:0;z-index:2;}
+
+.pg{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-start;
+  padding:3.6rem 1.4rem 5.2rem;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  opacity:0;pointer-events:none;
+  will-change:opacity,transform;
+  transition:opacity .6s ease,transform .6s ease;
+  transform:scale(.97);
+}
+.pg.on{opacity:1;pointer-events:all;transform:scale(1);}
+#p1{justify-content:center;}
+
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem 1.1rem;pointer-events:none;
+}
+#pgcount{font-family:'Dancing Script',cursive;font-size:.85rem;color:rgba(255,200,220,.58);}
+#audbtn{
+  pointer-events:all;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,107,157,.38);background:rgba(0,0,0,.3);
+  color:#fff;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s;
+}
+#audbtn.playing{animation:apls 1.8s ease-in-out infinite;}
+
+#nav{
+  position:fixed;bottom:1.1rem;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;align-items:center;gap:.65rem;
+}
+.nb{
+  background:rgba(0,0,0,.26);border:1px solid rgba(255,107,157,.3);
+  color:var(--tl);padding:.34rem .88rem;border-radius:2rem;
+  cursor:pointer;font-family:'Dancing Script',cursive;font-size:.92rem;
+  transition:background .3s;
+}
+.nb:hover:not(:disabled){background:rgba(255,107,157,.26);}
+.nb:disabled{opacity:.3;cursor:default;}
+#dots{display:flex;gap:.38rem;align-items:center;}
+.dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(255,255,255,.26);border:1px solid rgba(255,255,255,.38);
+  cursor:pointer;transition:all .32s;
+}
+.dot.on{background:var(--pk);box-shadow:0 0 6px var(--pk);transform:scale(1.4);}
+
+/* === PAGE 1 === */
+.p1by{
+  font-family:'Dancing Script',cursive;font-size:clamp(.8rem,2vw,.96rem);
+  color:rgba(255,200,220,.55);letter-spacing:.15em;margin-bottom:1rem;
+  animation:fu 1.3s ease .15s both;
+}
+#nd{display:flex;flex-wrap:wrap;justify-content:center;gap:1px;margin-bottom:1rem;}
+.nl{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.5rem,8vw,5.5rem);font-weight:600;
+  background:linear-gradient(135deg,#FF6B9D,#FFB347,#FF6B9D);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;transform:translateY(14px) scale(.88);
+  transition:opacity .38s ease,transform .38s ease;
+}
+.nl.v{opacity:1;transform:translateY(0) scale(1);}
+.p1f{
+  font-family:'Dancing Script',cursive;font-size:clamp(.98rem,2.6vw,1.42rem);
+  color:var(--ts);margin-bottom:1.5rem;
+  opacity:0;animation:fu 1.5s ease 2.1s both;
+}
+.qc{
+  max-width:530px;width:100%;background:var(--cb);
+  border:1px solid var(--bd);border-radius:1.3rem;
+  padding:1.4rem 1.6rem;text-align:center;
+  opacity:0;animation:fu 1.8s ease 3.1s both;
+}
+.qt{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.88rem,2.1vw,1.18rem);color:var(--tl);line-height:1.9;}
+.qn{color:var(--pk);font-weight:600;font-style:normal;}
+.fb{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.28rem;
+  font-size:clamp(1.4rem,3.6vw,2.1rem);margin-top:1.2rem;
+  opacity:0;animation:fu 1.8s ease 4.1s both;
+}
+.fa{display:inline-block;animation:flt 4s ease-in-out infinite;}
+.fa:nth-child(2){animation-delay:.4s}.fa:nth-child(3){animation-delay:.8s}
+.fa:nth-child(4){animation-delay:1.2s}.fa:nth-child(5){animation-delay:1.6s}
+.fa:nth-child(6){animation-delay:2s}.fa:nth-child(7){animation-delay:2.4s}
+
+/* === SHARED === */
+.plbl{font-size:.67rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pk);opacity:.7;margin-bottom:.35rem;text-align:center;}
+.pttl{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.6rem);font-style:italic;color:var(--tl);text-align:center;margin-bottom:1.7rem;}
+
+/* === PAGE 2 === */
+.bq{display:flex;flex-direction:column;align-items:center;}
+.fr{display:flex;justify-content:center;gap:1px;line-height:1;}
+.fr1{font-size:clamp(2rem,4.6vw,3.2rem);}
+.fr2{font-size:clamp(2.4rem,5.6vw,3.8rem);}
+.fr3{font-size:clamp(1.8rem,3.6vw,2.7rem);}
+.fs{display:inline-block;animation:sw 4.5s ease-in-out infinite;}
+.fs:nth-child(2){animation-delay:.3s}.fs:nth-child(3){animation-delay:.6s}
+.fs:nth-child(4){animation-delay:.9s}.fs:nth-child(5){animation-delay:1.2s}
+.vstm{width:3px;height:44px;background:linear-gradient(to bottom,#6aaa45,#2d6b1a);border-radius:2px;}
+.vb{
+  width:118px;background:linear-gradient(135deg,rgba(255,107,157,.18),rgba(255,179,71,.18));
+  border:1.5px solid rgba(255,107,157,.35);border-radius:0 0 52% 52%/0 0 38% 38%;
+  padding:.38rem .38rem .6rem;text-align:center;position:relative;
+}
+.vb::before{content:'';position:absolute;top:-5px;left:-1px;right:-1px;height:10px;background:linear-gradient(135deg,rgba(255,107,157,.35),rgba(255,179,71,.35));border-radius:6px;}
+.vbl{font-family:'Dancing Script',cursive;font-size:.83rem;color:var(--tl);margin-top:.18rem;display:block;}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:.85rem;width:100%;max-width:700px;margin-top:1.5rem;}
+.card{background:var(--cb);border:1px solid var(--bd);border-radius:1.1rem;padding:1.15rem .88rem;text-align:center;transition:transform .3s;}
+.card:active{transform:scale(.97);}
+.ci{font-size:1.7rem;margin-bottom:.5rem;}
+.ct{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:var(--pk);margin-bottom:.38rem;}
+.cbx{font-size:.81rem;font-weight:300;color:var(--ts);line-height:1.58;}
+
+/* === PAGE 3 === */
+.bb{max-width:580px;width:100%;background:var(--cb);border:1px solid var(--bd);border-radius:1.3rem;padding:1.6rem 1.4rem;text-align:center;}
+.bl{font-family:'Dancing Script',cursive;font-size:clamp(.88rem,2.1vw,1.18rem);color:var(--tl);line-height:1.82;}
+.dv{width:42px;height:1.5px;background:linear-gradient(to right,transparent,var(--pk),transparent);margin:.72rem auto;}
+.rl{list-style:none;display:flex;flex-direction:column;gap:.5rem;max-width:560px;width:100%;margin-top:1rem;}
+.ri{display:flex;align-items:flex-start;gap:.72rem;background:rgba(0,0,0,.22);border-radius:.72rem;padding:.72rem .95rem;border-left:2.5px solid var(--pk);font-size:.82rem;font-weight:300;color:var(--ts);line-height:1.56;}
+.rn{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--pk);min-width:1.2rem;}
+
+/* === PAGE 4 === */
+.ltr{max-width:570px;width:100%;background:var(--cb);border:1px solid var(--bd);border-radius:1.3rem;padding:1.9rem 1.75rem;position:relative;overflow:hidden;}
+.ltr::before{content:'\201C';position:absolute;top:-1rem;left:.9rem;font-family:'Playfair Display',serif;font-size:7.5rem;color:rgba(255,107,157,.1);line-height:1;pointer-events:none;}
+.lb{font-family:'Dancing Script',cursive;font-size:clamp(.96rem,2.2vw,1.22rem);line-height:2;color:var(--tl);position:relative;z-index:1;}
+.ln{color:var(--pk);font-weight:700;}
+.ls{font-family:'Dancing Script',cursive;font-size:1.28rem;font-weight:700;color:var(--pk);text-align:right;margin-top:1rem;}
+.ftf{margin-top:1.3rem;text-align:center;}
+.fh{font-size:1.3rem;letter-spacing:.28rem;animation:pls 2.2s ease-in-out infinite;}
+.fl{font-family:'Dancing Script',cursive;font-size:.86rem;color:rgba(255,180,200,.58);margin-top:.26rem;}
+
+/* KEYFRAMES — transform+opacity only (GPU compositor thread, no lag) */
+@keyframes fu{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes flt{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-9px) rotate(5deg);}}
+@keyframes sw{0%,100%{transform:rotate(-3.5deg) translateY(0);}50%{transform:rotate(3.5deg) translateY(-5px);}}
+@keyframes pls{0%,100%{opacity:1;}50%{opacity:.5;}}
+@keyframes apls{0%,100%{box-shadow:0 0 0 0 rgba(255,107,157,.5);}50%{box-shadow:0 0 0 6px rgba(255,107,157,0);}}
+
+@media(max-width:480px){
+  .cg{grid-template-columns:1fr 1fr;}
+  .ltr{padding:1.4rem 1rem;}
+  .bb{padding:1.3rem .88rem;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<canvas id="pc"></canvas>
+
+<div id="topbar">
+  <span id="pgcount">Page 1 / 4</span>
+  <button id="audbtn" onclick="toggleAudio()">🔇</button>
+</div>
+
+<div id="app">
+
+  <!-- PAGE 1 — THE REVEAL -->
+  <div class="pg on" id="p1">
+    <p class="p1by">✨ Created by Rohail ✨</p>
+    <div id="nd"></div>
+    <p class="p1f">For you, Ms Mubashira 🌸</p>
+    <div class="qc">
+      <p class="qt">
+        "In every universe, in every lifetime…<br>
+        I think my heart would still search for you,
+        <span class="qn">Mubashira.</span>"
+      </p>
+    </div>
+    <div class="fb">
+      <span class="fa">🌸</span><span class="fa">🌹</span><span class="fa">🌺</span>
+      <span class="fa">🪷</span><span class="fa">🌷</span><span class="fa">🌻</span><span class="fa">💐</span>
+    </div>
+  </div>
+
+  <!-- PAGE 2 — FLOWERS -->
+  <div class="pg" id="p2">
+    <span class="plbl">A garden, just for you</span>
+    <h2 class="pttl">Your Bucket of Flowers</h2>
+    <div class="bq">
+      <div class="fr fr1"><span class="fs">🌸</span><span class="fs">🌺</span><span class="fs">🪷</span><span class="fs">🌺</span><span class="fs">🌸</span></div>
+      <div class="fr fr2"><span class="fs">🌹</span><span class="fs">🌷</span><span class="fs">🌻</span><span class="fs">🌷</span><span class="fs">🌹</span></div>
+      <div class="fr fr3"><span class="fs">💐</span><span class="fs">🌼</span><span class="fs">🌿</span><span class="fs">🌼</span><span class="fs">💐</span></div>
+      <div class="vstm"></div>
+      <div class="vb"><span class="vbl">For Mubashira 🎀</span></div>
+    </div>
+    <div class="cg">
+      <div class="card"><div class="ci">☀️</div><h3 class="ct">My Sunshine</h3><p class="cbx">Every morning feels warmer knowing you exist. You turn ordinary days into something beautiful.</p></div>
+      <div class="card"><div class="ci">🕊️</div><h3 class="ct">My Peace</h3><p class="cbx">In a world full of noise, you are my quiet. Your presence calms every storm inside me.</p></div>
+      <div class="card"><div class="ci">🏠</div><h3 class="ct">My Home</h3><p class="cbx">Home isn't a place — it's you. Wherever you are is where I belong, always.</p></div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 — BLESSINGS -->
+  <div class="pg" id="p3">
+    <span class="plbl">Prayers from my heart</span>
+    <h2 class="pttl" style="margin-bottom:1.2rem">Blessings for Mubashira</h2>
+    <div class="bb">
+      <p class="bl">May your days overflow with more joy than your heart can hold 🌸</p>
+      <div class="dv"></div>
+      <p class="bl">May every door you knock on open wide for you ✨</p>
+      <div class="dv"></div>
+      <p class="bl">May your smile never fade and your light never dim 🕯️</p>
+      <div class="dv"></div>
+      <p class="bl">May you always know deeply how truly loved you are 💗</p>
+      <div class="dv"></div>
+      <p class="bl">May Allah bless every dream you carry in your heart 🤲</p>
+      <div class="dv"></div>
+      <p class="bl">May your life be as beautiful as the soul you carry 🪷</p>
+    </div>
+    <ul class="rl">
+      <li class="ri"><span class="rn">i.</span><span>The way your eyes light up when you talk about things you love.</span></li>
+      <li class="ri"><span class="rn">ii.</span><span>How you make even tiny moments feel like memories worth keeping forever.</span></li>
+      <li class="ri"><span class="rn">iii.</span><span>Your kindness — the quiet, effortless kind that changes everyone around you.</span></li>
+      <li class="ri"><span class="rn">iv.</span><span>The sound of your laughter — it heals something in me every single time.</span></li>
+    </ul>
+  </div>
+
+  <!-- PAGE 4 — LETTER -->
+  <div class="pg" id="p4">
+    <span class="plbl">From my heart to yours</span>
+    <h2 class="pttl" style="margin-bottom:1.2rem">A Little Letter</h2>
+    <div class="ltr">
+      <p class="lb">
+        My love, <span class="ln">Mubashira</span>,<br><br>
+        I don't always have the right words — but I have this: you are the best thing that has ever walked into my life.<br><br>
+        Every moment with you feels like a gift I didn't know I needed. You make me want to be better, love harder, and hold tighter to every single second we share together.<br><br>
+        So I built you this — a small corner of the world that belongs entirely to you. A place that says what I sometimes forget to say out loud:<br><br>
+        I love you. Deeply. Completely. Always. 💗
+      </p>
+      <p class="ls">— Rohail, yours forever 🌹</p>
+    </div>
+    <div class="ftf">
+      <div class="fh">💗 💕 💗</div>
+      <p class="fl">Made with every piece of my heart, for Mubashira.</p>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<nav id="nav">
+  <button class="nb" id="pb" onclick="movePage(-1)" disabled>← Prev</button>
+  <div id="dots"></div>
+  <button class="nb" id="nb2" onclick="movePage(1)">Next →</button>
+</nav>
+
+<script>
+// ── Mobile-aware particle counts (key for no-lag on phone)
+const MOB = window.innerWidth < 768;
+const N_PETALS = MOB ? 14 : 24;
+const N_PARTS  = MOB ? 28 : 50;
+const N_SHOTS  = MOB ? 3  : 5;
+
+// ════════════════════════════════════════════════
+// BG CANVAS  –  sunset gradient + stars + glow dots
+// ════════════════════════════════════════════════
+const bgEl = document.getElementById('bg');
+const bgc  = bgEl.getContext('2d');
+let W=0, H=0;
+
+function rzBg(){W=bgEl.width=window.innerWidth;H=bgEl.height=window.innerHeight;}
+rzBg(); window.addEventListener('resize',rzBg,{passive:true});
+
+let tick=0;
+
+// Shooting stars
+class Shot{
+  constructor(){this.live=false;}
+  spawn(){
+    this.sx=Math.random()*W*1.3-W*.15; this.sy=Math.random()*H*.42;
+    this.ex=this.sx; this.ey=this.sy;
+    this.ang=Math.PI/8+(Math.random()-.5)*.28;
+    this.spd=5+Math.random()*5; this.life=0;
+    this.maxL=50+Math.random()*50; this.a=0; this.live=true;
+  }
+  step(){
+    if(!this.live)return; this.life++;
+    this.ex+=Math.cos(this.ang)*this.spd; this.ey+=Math.sin(this.ang)*this.spd;
+    const p=this.life/this.maxL;
+    this.a=p<.15?p/.15:p>.68?1-(p-.68)/.32:1;
+    if(p>=1)this.live=false;
+  }
+  draw(){
+    if(!this.live)return;
+    bgc.save(); bgc.globalAlpha=this.a*.8;
+    const g=bgc.createLinearGradient(this.sx,this.sy,this.ex,this.ey);
+    g.addColorStop(0,'rgba(255,255,255,0)');
+    g.addColorStop(.4,'rgba(255,210,230,.5)');
+    g.addColorStop(1,'rgba(255,255,255,.9)');
+    bgc.strokeStyle=g; bgc.lineWidth=1.4;
+    bgc.beginPath(); bgc.moveTo(this.sx,this.sy); bgc.lineTo(this.ex,this.ey); bgc.stroke();
+    const rg=bgc.createRadialGradient(this.ex,this.ey,0,this.ex,this.ey,3.5);
+    rg.addColorStop(0,'rgba(255,255,255,.85)'); rg.addColorStop(1,'rgba(255,150,200,0)');
+    bgc.fillStyle=rg; bgc.beginPath(); bgc.arc(this.ex,this.ey,3.5,0,Math.PI*2); bgc.fill();
+    bgc.restore();
+  }
+}
+const shots=Array.from({length:N_SHOTS},()=>new Shot());
+let stk=0;
+
+// Floating glow particles
+const PCOLS=['255,107,157','255,179,71','185,105,255','255,220,230'];
+class Pt{
+  constructor(s){
+    this.x=Math.random()*(W||400); this.y=s?Math.random()*(H||700):(H||700)+10;
+    this.r=.8+Math.random()*2.2;
+    this.vx=(Math.random()-.5)*.22; this.vy=-.11-Math.random()*.26;
+    this.a=0; this.l=s?Math.random()*260:0; this.ml=180+Math.random()*300;
+    this.c=PCOLS[Math.floor(Math.random()*PCOLS.length)];
+  }
+  step(){
+    this.l++; this.x+=this.vx; this.y+=this.vy;
+    const p=this.l/this.ml;
+    this.a=p<.12?p/.12:p>.8?(1-p)/.2:.3+Math.sin(p*Math.PI)*.1;
+    if(this.l>=this.ml||this.y<-10||this.x<-10||this.x>W+10){
+      this.x=Math.random()*W; this.y=H+10; this.l=0;
+      this.ml=180+Math.random()*300;
+      this.vx=(Math.random()-.5)*.22; this.vy=-.11-Math.random()*.26;
+      this.c=PCOLS[Math.floor(Math.random()*PCOLS.length)];
+    }
+  }
+  draw(){
+    bgc.save(); bgc.globalAlpha=Math.max(0,this.a);
+    const g=bgc.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*3);
+    g.addColorStop(0,`rgba(${this.c},.85)`); g.addColorStop(1,`rgba(${this.c},0)`);
+    bgc.fillStyle=g; bgc.beginPath(); bgc.arc(this.x,this.y,this.r*3,0,Math.PI*2); bgc.fill();
+    bgc.restore();
+  }
+}
+const pts=Array.from({length:N_PARTS},()=>new Pt(true));
+
+function lerp(a,b,t){return Math.round(a+(b-a)*t);}
+
+function drawBg(){
+  tick++;
+  const t=(Math.sin(tick*.006)+1)/2;
+  // Animated sunset gradient — deep purple top → warm gold bottom
+  const g=bgc.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,  `rgb(${lerp(16,26,t)},${lerp(6,10,t)},${lerp(44,58,t)})`);
+  g.addColorStop(.25,`rgb(${lerp(68,90,t)},${lerp(16,26,t)},${lerp(90,115,t)})`);
+  g.addColorStop(.55,`rgb(${lerp(148,172,t)},${lerp(42,56,t)},${lerp(90,104,t)})`);
+  g.addColorStop(.82,`rgb(${lerp(192,218,t)},${lerp(74,98,t)},${lerp(70,84,t)})`);
+  g.addColorStop(1,  `rgb(${lerp(238,255,t)},${lerp(108,138,t)},${lerp(70,90,t)})`);
+  bgc.fillStyle=g; bgc.fillRect(0,0,W,H);
+  // Stars
+  stk++; if(stk>90){stk=0;const s=shots.find(x=>!x.live);if(s)s.spawn();}
+  shots.forEach(s=>{s.step();s.draw();});
+  // Particles
+  pts.forEach(p=>{p.step();p.draw();});
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ════════════════════════════════════════════════
+// PETAL CANVAS  –  falling flower emojis
+// ════════════════════════════════════════════════
+const pcEl=document.getElementById('pc');
+const pctx=pcEl.getContext('2d');
+function rzPc(){pcEl.width=window.innerWidth;pcEl.height=window.innerHeight;}
+rzPc(); window.addEventListener('resize',rzPc,{passive:true});
+
+const PEMJ=['🌸','🌺','🪷','🌷','💮','🌼','💗','🌹'];
+class Petal{
+  constructor(s){
+    this.x=Math.random()*pcEl.width; this.y=s?Math.random()*pcEl.height:-30;
+    this.sz=10+Math.random()*9; this.sp=.42+Math.random()*.85;
+    this.dr=(Math.random()-.5)*.7; this.ro=Math.random()*Math.PI*2;
+    this.rs=(Math.random()-.5)*.024; this.wo=Math.random()*Math.PI*2;
+    this.ws=.011+Math.random()*.011; this.al=.22+Math.random()*.36;
+    this.em=PEMJ[Math.floor(Math.random()*PEMJ.length)];
+  }
+  step(){
+    this.y+=this.sp; this.x+=this.dr+Math.sin(this.wo)*.4;
+    this.wo+=this.ws; this.ro+=this.rs;
+    if(this.y>pcEl.height+30){
+      this.x=Math.random()*pcEl.width; this.y=-30;
+      this.em=PEMJ[Math.floor(Math.random()*PEMJ.length)];
+    }
+  }
+  draw(){
+    pctx.save(); pctx.globalAlpha=this.al;
+    pctx.translate(this.x,this.y); pctx.rotate(this.ro);
+    pctx.font=`${this.sz}px serif`;
+    pctx.textAlign='center'; pctx.textBaseline='middle';
+    pctx.fillText(this.em,0,0); pctx.restore();
+  }
+}
+const petals=Array.from({length:N_PETALS},()=>new Petal(true));
+(function ap(){
+  pctx.clearRect(0,0,pcEl.width,pcEl.height);
+  petals.forEach(p=>{p.step();p.draw();});
+  requestAnimationFrame(ap);
+})();
+
+// ════════════════════════════════════════════════
+// NAME ANIMATION  –  M·U·B·A·S·H·I·R·A
+// ════════════════════════════════════════════════
+const NAME='MUBASHIRA';
+const ndiv=document.getElementById('nd');
+NAME.split('').forEach(ch=>{
+  const s=document.createElement('span');
+  s.className='nl'; s.textContent=ch; ndiv.appendChild(s);
+});
+const nls=ndiv.querySelectorAll('.nl');
+
+// Letter-by-letter reveal with sparkle flash
+nls.forEach((el,i)=>{
+  setTimeout(()=>{
+    el.classList.add('v');
+    el.style.filter='drop-shadow(0 0 36px rgba(255,255,255,.86)) brightness(2.1)';
+    setTimeout(()=>{el.style.filter='drop-shadow(0 0 11px rgba(255,107,157,.52))';},370);
+  },280+i*140);
+});
+
+// Shimmer wave loop after all letters visible
+setTimeout(()=>{
+  let wi=0;
+  setInterval(()=>{
+    nls.forEach(e=>{e.style.filter='drop-shadow(0 0 10px rgba(255,107,157,.48))';});
+    const i=wi%nls.length;
+    nls[i].style.filter='drop-shadow(0 0 28px rgba(255,107,157,1)) brightness(1.5)';
+    if(i+1<nls.length)nls[i+1].style.filter='drop-shadow(0 0 16px rgba(255,179,71,.78)) brightness(1.28)';
+    wi++;
+  },720);
+},2900);
+
+// ════════════════════════════════════════════════
+// PAGE SYSTEM  –  fade transitions, dots, swipe
+// ════════════════════════════════════════════════
+const TOTAL=4; let cur=1;
+const dotsEl=document.getElementById('dots');
+for(let i=1;i<=TOTAL;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===1?' on':'');
+  d.dataset.p=i; d.onclick=()=>gotoPage(i);
+  dotsEl.appendChild(d);
+}
+
+function gotoPage(n){
+  if(n<1||n>TOTAL)return;
+  document.getElementById('p'+cur).classList.remove('on');
+  document.getElementById('p'+n).classList.add('on');
+  document.getElementById('p'+n).scrollTop=0;
+  cur=n;
+  dotsEl.querySelectorAll('.dot').forEach(d=>d.classList.toggle('on',+d.dataset.p===n));
+  document.getElementById('pgcount').textContent='Page '+n+' / '+TOTAL;
+  document.getElementById('pb').disabled=(n===1);
+  document.getElementById('nb2').disabled=(n===TOTAL);
+}
+function movePage(d){gotoPage(cur+d);}
+gotoPage(1);
+
+// Keyboard arrows (desktop)
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight')movePage(1);
+  if(e.key==='ArrowLeft')movePage(-1);
+});
+
+// Touch swipe (mobile)
+let tx0=0;
+document.addEventListener('touchstart',e=>{tx0=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].screenX-tx0;
+  if(Math.abs(dx)>48)movePage(dx<0?1:-1);
+},{passive:true});
+
+// ════════════════════════════════════════════════
+// AMBIENT AUDIO  –  rain + soft piano
+// ════════════════════════════════════════════════
+let Ac=null, isPlay=false, pianoQ=null;
+
+const MEL=[
+  [0,523.25,1.3],[.9,392,1.0],[1.7,440,1.1],
+  [3.0,329.63,1.3],[4.0,293.66,1.1],[5.3,261.63,1.5],
+  [6.8,392,1.0],[7.6,440,1.1],[8.9,523.25,1.6],
+  [10.5,659.25,.9],[11.5,587.33,1.1],[12.8,523.25,1.5]
+];
+const PDUR=14.5;
+
+function initAudio(){
+  Ac=new(window.AudioContext||window.webkitAudioContext)();
+  // Rain (filtered white noise)
+  const buf=Ac.createBuffer(1,2*Ac.sampleRate,Ac.sampleRate);
+  const dat=buf.getChannelData(0);
+  for(let i=0;i<dat.length;i++)dat[i]=Math.random()*2-1;
+  const src=Ac.createBufferSource(); src.buffer=buf; src.loop=true;
+  const bp=Ac.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=430; bp.Q.value=.5;
+  const hp=Ac.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=170;
+  const rg=Ac.createGain(); rg.gain.value=.09;
+  src.connect(bp); bp.connect(hp); hp.connect(rg); rg.connect(Ac.destination); src.start();
+  startPiano();
+}
+
+function startPiano(){
+  function loop(t0){
+    if(!isPlay)return;
+    MEL.forEach(([t,f,d])=>{
+      note(f,t0+t,d,.066);
+      note(f*.5,t0+t,d*.72,.022);
+    });
+    const nxt=t0+PDUR;
+    pianoQ=setTimeout(()=>loop(nxt),(nxt-Ac.currentTime-.5)*1000);
+  }
+  loop(Ac.currentTime+.1);
+}
+
+function note(f,when,dur,vol){
+  if(!Ac)return;
+  const o=Ac.createOscillator(),g=Ac.createGain();
+  const lp=Ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=880;
+  o.type='triangle'; o.frequency.value=f;
+  g.gain.setValueAtTime(0,when);
+  g.gain.linearRampToValueAtTime(vol,when+.05);
+  g.gain.exponentialRampToValueAtTime(.001,when+dur);
+  o.connect(lp); lp.connect(g); g.connect(Ac.destination);
+  o.start(when); o.stop(when+dur+.12);
+}
+
+function toggleAudio(){
+  const btn=document.getElementById('audbtn');
+  if(!Ac){
+    initAudio(); isPlay=true; btn.textContent='🎵'; btn.classList.add('playing');
+  }else if(isPlay){
+    isPlay=false; clearTimeout(pianoQ);
+    Ac.suspend(); btn.textContent='🔇'; btn.classList.remove('playing');
+  }else{
+    isPlay=true; Ac.resume(); startPiano();
+    btn.textContent='🎵'; btn.classList.add('playing');
+  }
+}
+</script>
+</body>
+</html>
