@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memory 2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="fade">
+<div class="bg"></div>
+
+<div class="center">
+    <h1>🌙 Even Silence Feels Like You</h1>
+    <p>Some people don’t leave… they stay in thoughts.</p>
+
+    <a class="button" href="page4.html">Next</a>
+</div>
+
+<script>
+for(let i=0;i<20;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(Math.random()*5+3)+"s";
+    document.body.appendChild(h);
+}
+</script>
+
+</body>
+</html>
