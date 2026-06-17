@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<div class="center">
+    <h1 class="title">🌌 A Memory For You</h1>
+
+    <p class="text">
+        Enter a world made from feelings, silence, and memories.
+    </p>
+
+    <input id="name" placeholder="Enter name..."
+    style="padding:12px;border-radius:10px;font-size:16px;">
+
+    <br><br>
+
+    <button onclick="check()">Unlock</button>
+</div>
+
+<audio id="bgm" loop>
+    <source src="music.mp3">
+</audio>
+
+<script>
+function check(){
+    let v = document.getElementById("name").value;
+
+    if(v.toLowerCase() === "mubashira"){
+        window.location.href = "page2.html";
+    } else {
+        alert("Wrong name 💔");
+    }
+}
+</script>
+
+</body>
+</html>
