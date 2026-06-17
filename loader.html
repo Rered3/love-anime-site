@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="center">
+
+<h1 class="title">🎬 Loading Memory World...</h1>
+
+<p class="text">Preparing emotions...</p>
+
+<button onclick="start()">Enter</button>
+
+<script>
+function start(){
+    let i = 0;
+
+    let load = setInterval(() => {
+        i++;
+        if(i > 100){
+            clearInterval(load);
+            window.location.href = "index.html";
+        }
+    }, 20);
+}
+</script>
+
+</body>
+</html>
