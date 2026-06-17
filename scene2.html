@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body onclick="initMusic(); spawnParticles(); heartbeatSync();">
+
+<div class="bg"></div>
+<div class="overlay"></div>
+<div class="particles"></div>
+
+<div class="center heartbeat">
+
+    <h1 class="title">💖 Mubashira</h1>
+
+    <img src="her.jpg" class="photo">
+
+    <p class="text" id="msg"></p>
+
+    <script>
+        typeText("msg",
+        "You didn’t just enter my thoughts… you became my silence, my calm, my everything.");
+    </script>
+
+    <br><br>
+
+    <button onclick="goPage('scene2.html')">Next Scene</button>
+
+</div>
+
+<script src="engine.js"></script>
+
+</body>
+</html>
