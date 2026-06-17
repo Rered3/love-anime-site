@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: black;
+    color: white;
+    overflow: hidden;
+}
+
+/* 🌌 SKY */
+.sky {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    z-index: -2;
+}
+
+/* ✨ STAR */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    opacity: 0.7;
+}
+
+/* 🌸 BLOSSOM */
+.blossom {
+    position: absolute;
+    font-size: 16px;
+    animation: fall linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
+}
+
+/* 🎬 SCENES */
+.center {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 💖 TEXT */
+.title {
+    font-size: 30px;
+}
+
+.text {
+    font-size: 18px;
+    opacity: 0.85;
+    margin: 20px;
+}
+
+/* 🔘 BUTTON */
+button {
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+}
+
+/* 🌀 TRANSITION */
+.fade-out {
+    opacity: 0;
+    transform: scale(1.1);
+    transition: 0.7s ease;
+}

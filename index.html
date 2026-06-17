@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Love Story</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body onclick="startMusic();">
+
+<div class="sky"></div>
+
+<div class="center">
+    <h1 class="title">🌌 Enter Her Name</h1>
+
+    <input id="name" placeholder="Type name..." style="padding:10px;border-radius:10px;">
+    <br><br>
+
+    <button onclick="unlock()">Unlock</button>
+</div>
+
+<audio id="bgm" loop>
+    <source src="music.mp3">
+</audio>
+
+<script src="engine.js"></script>
+
+<script>
+createSky();
+
+function unlock(){
+    const val = document.getElementById("name").value;
+
+    if(val.toLowerCase() === "mubashira"){
+        goScene("scene2.html");
+    } else {
+        alert("Wrong name 💔");
+    }
+}
+</script>
+
+</body>
+</html>
